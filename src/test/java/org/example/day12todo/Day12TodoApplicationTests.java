@@ -56,6 +56,7 @@ public class Day12TodoApplicationTests {
             .andExpect(jsonPath("$[0].done").value(false));
     }
 
+    // AC2 Create
     @Test
     void should_response_one_todo_when_add_one_todo() throws Exception {
         String requestBody = """
@@ -127,6 +128,7 @@ public class Day12TodoApplicationTests {
             .andExpect(jsonPath("$.done").value(false));
     }
 
+    // AC3 Update
     @Test
     void should_response_todo_when_update_todo() throws Exception {
         Todo todo = new Todo(null, "Buy milk", false);
@@ -191,6 +193,25 @@ public class Day12TodoApplicationTests {
             .andExpect(status().isNotFound());
     }
 
+    @Test
+    void should_response_422_when_update_todo_with_empty_text() throws Exception {
+        Todo todo = new Todo(null, "Buy milk", false);
+        Todo savedTodo = todoRepository.save(todo);
+
+        String requestBody = """
+            {
+            }
+            """;
+        MockHttpServletRequestBuilder request = put("/todos/" + savedTodo.getId())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isUnprocessableEntity());
+    }
+
+
+    // AC4 Delete
     @Test
     void should_response_204_when_delete_exist_todo() throws Exception {
         Todo todo = new Todo(null, "Buy milk", false);

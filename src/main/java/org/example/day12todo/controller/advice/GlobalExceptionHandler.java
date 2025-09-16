@@ -2,6 +2,7 @@ package org.example.day12todo.controller.advice;
 
 import org.example.day12todo.exception.InvalidTextTodoException;
 import org.example.day12todo.exception.NoExistTodoException;
+import org.example.day12todo.exception.NullRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,5 +21,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseException exceptionHandler2(Exception e) {
         return new ResponseException(e.getMessage());
+    }
+
+    @ExceptionHandler(NullRequestException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public NullRequestException exceptionHandler3(Exception e) {
+        return new NullRequestException(e.getMessage());
     }
 }
