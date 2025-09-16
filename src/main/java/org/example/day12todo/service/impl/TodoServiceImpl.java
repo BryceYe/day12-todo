@@ -12,7 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
-    public List<Todo> findAll(){
+
+    public List<Todo> index(){
         return todoRepository.findAll();
     }
 
