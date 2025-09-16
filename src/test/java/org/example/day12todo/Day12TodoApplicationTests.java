@@ -134,7 +134,7 @@ public class Day12TodoApplicationTests {
 
         String requestBody = """
             {
-                "text": "Buy bread",
+                "text": "Buy snacks",
                 "done": true
             }
             """;
@@ -145,8 +145,50 @@ public class Day12TodoApplicationTests {
         mockMvc.perform(request)
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id").value(savedTodo.getId()))
-            .andExpect(jsonPath("$.text").value("Buy bread"))
+            .andExpect(jsonPath("$.text").value("Buy snacks"))
             .andExpect(jsonPath("$.done").value(true));
+    }
+
+    @Test
+    void should_response_id_123_todo_when_update_todo_with_put_id_123_and_body_id_456() throws Exception {
+        Todo todo = new Todo("123", "Buy milk", true);
+        todoRepository.save(todo);
+
+        Todo todo2 = new Todo("456", "Buy milk", true);
+        todoRepository.save(todo2);
+
+        String requestBody = """
+            {
+                "id": "456",
+                "text": "Buy snacks",
+                "done": true
+            }
+            """;
+        MockHttpServletRequestBuilder request = put("/todos/123")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value("123"))
+            .andExpect(jsonPath("$.text").value("Buy snacks"))
+            .andExpect(jsonPath("$.done").value(true));
+    }
+
+    @Test
+    void should_response_404_when_update_non_exist_todo() throws Exception {
+        String requestBody = """
+            {
+                "text": "Buy snacks",
+                "done": true
+            }
+            """;
+        MockHttpServletRequestBuilder request = put("/todos/999")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isNotFound());
     }
 
 }
