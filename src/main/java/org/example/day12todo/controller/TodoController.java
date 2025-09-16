@@ -27,4 +27,10 @@ public class TodoController {
     public TodoResponse createTodo(@RequestBody TodoRequest request) {
         return TodoMapper.toResponse(todoService.createTodo(request));
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TodoResponse updateTodo(@PathVariable String id, @RequestBody TodoRequest request) {
+        return TodoMapper.toResponse(todoService.updateTodo(id, request));
+    }
 }

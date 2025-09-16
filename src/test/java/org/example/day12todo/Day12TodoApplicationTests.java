@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.hamcrest.Matchers.not;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,4 +126,27 @@ public class Day12TodoApplicationTests {
             .andExpect(jsonPath("$.text").value("Buy milk"))
             .andExpect(jsonPath("$.done").value(false));
     }
+
+    @Test
+    void should_response_todo_when_update_todo() throws Exception {
+        Todo todo = new Todo(null, "Buy milk", false);
+        Todo savedTodo = todoRepository.save(todo);
+
+        String requestBody = """
+            {
+                "text": "Buy bread",
+                "done": true
+            }
+            """;
+        MockHttpServletRequestBuilder request = put("/todos/" + savedTodo.getId())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(savedTodo.getId()))
+            .andExpect(jsonPath("$.text").value("Buy bread"))
+            .andExpect(jsonPath("$.done").value(true));
+    }
+
 }

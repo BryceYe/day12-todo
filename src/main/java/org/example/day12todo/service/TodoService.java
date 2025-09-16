@@ -9,4 +9,6 @@ public interface TodoService {
     List<Todo> index();
 
     Todo createTodo(TodoRequest request);
+
+    Todo updateTodo(String id, TodoRequest request);
 }
