@@ -191,4 +191,24 @@ public class Day12TodoApplicationTests {
             .andExpect(status().isNotFound());
     }
 
+    @Test
+    void should_response_204_when_delete_exist_todo() throws Exception {
+        Todo todo = new Todo(null, "Buy milk", false);
+        Todo savedTodo = todoRepository.save(todo);
+
+        MockHttpServletRequestBuilder request = delete("/todos/" + savedTodo.getId())
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+            .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_response_404_when_delete_non_exist_todo() throws Exception {
+        MockHttpServletRequestBuilder request = delete("/todos/999")
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+            .andExpect(status().isNotFound());
+    }
 }

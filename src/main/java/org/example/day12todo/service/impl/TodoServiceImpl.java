@@ -44,4 +44,13 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.save(updatedTodo);
     }
 
+    @Override
+    public void deleteTodo(String id) {
+        Optional<Todo> todo = todoRepository.findById(id);
+        if (todo.isEmpty()) {
+            throw new NoExistTodoException("Todo not found with id: " + id);
+        }
+        todoRepository.deleteById(id);
+    }
+
 }
