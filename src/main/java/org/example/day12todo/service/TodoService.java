@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TodoService {
     List<Todo> index();
+
+    Todo createTodo(Todo todo);
 }
