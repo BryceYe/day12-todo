@@ -22,8 +22,8 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo createTodo(TodoRequest request) {
-        if (request.getText().isEmpty()) {
-            throw new InvalidTextTodoException("Todo text cannot be empty");
+        if (request.getText() == null || request.getText().isEmpty()) {
+            throw new InvalidTextTodoException("Todo text cannot be empty or null");
         }
         Todo todo = new Todo();
         BeanUtils.copyProperties(request, todo);

@@ -91,5 +91,19 @@ public class Day12TodoApplicationTests {
             .andExpect(status().isUnprocessableEntity());
     }
 
+    @Test
+    void should_response_422_when_add_todo_with_null_text() throws Exception {
+        String requestBody = """
+            {
+                "done": false
+            }
+            """;
+        MockHttpServletRequestBuilder request = post("/todos")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isUnprocessableEntity());
+    }
 
 }
