@@ -74,4 +74,22 @@ public class Day12TodoApplicationTests {
             .andExpect(jsonPath("$.text").value("Buy milk"))
             .andExpect(jsonPath("$.done").value(false));
     }
+
+    @Test
+    void should_response_422_when_add_todo_without_text() throws Exception {
+        String requestBody = """
+            {
+                "text": "",
+                "done": false
+            }
+            """;
+        MockHttpServletRequestBuilder request = post("/todos")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(requestBody);
+
+        mockMvc.perform(request)
+            .andExpect(status().isUnprocessableEntity());
+    }
+
+
 }

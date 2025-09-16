@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TodoRequest {
-    @NotNull(message = "text cannot be null")
+    @NotNull(message = "text cannot be empty")
     private String text;
     private boolean done;
 }

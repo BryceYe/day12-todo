@@ -1,5 +1,6 @@
 package org.example.day12todo.service;
 
+import org.example.day12todo.dto.TodoRequest;
 import org.example.day12todo.entity.Todo;
 
 import java.util.List;
@@ -7,5 +8,5 @@ import java.util.List;
 public interface TodoService {
     List<Todo> index();
 
-    Todo createTodo(Todo todo);
+    Todo createTodo(TodoRequest request);
 }
