@@ -1,0 +1,8 @@
+spring:
+  ai:
+    openai:
+      base-url: https://api.moonshot.cn/
+      api-key: sk-rKOc28nfuJ2MPGZgB0Kgby8HGpRjs1dccvjqoKc7zpKsgnZB
+      chat:
+        options:
+          model: kimi-k2-0905-preview

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class TodoRequest {
     @NotNull(message = "text cannot be empty")
     private String text;
-    private boolean done;
+    private Boolean done;
 }
